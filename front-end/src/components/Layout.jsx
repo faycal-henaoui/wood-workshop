@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const Navbar = styled.div`
   height: 70px;
-  background-color: var(--card-bg);
+  background-color: var(--primary);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -39,14 +39,14 @@ const LogoSection = styled.div`
   }
 
   h2 {
-    color: var(--white);
+    color: #ffffff;
     font-size: 1.4rem;
     margin: 0;
     font-weight: 800;
     letter-spacing: -0.5px;
     
     span {
-      color: var(--secondary);
+      color: #fbbf24;
     }
   }
 
@@ -69,7 +69,7 @@ const MobileMenuButton = styled.button`
   display: none;
   background: transparent;
   border: none;
-  color: var(--white);
+  color: #ffffff;
   cursor: pointer;
   padding: 5px;
 
@@ -82,17 +82,17 @@ const TopNavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: ${props => props.$active ? 'var(--secondary)' : 'var(--text)'};
+  color: ${props => props.$active ? '#ffffff' : 'rgba(255,255,255,0.7)'};
   text-decoration: none;
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 8px;
-  background-color: ${props => props.$active ? 'rgba(230, 126, 34, 0.1)' : 'transparent'};
+  background-color: ${props => props.$active ? 'rgba(255, 255, 255, 0.2)' : 'transparent'};
   transition: all 0.2s;
 
   &:hover {
-    color: var(--secondary);
-    background-color: rgba(230, 126, 34, 0.05);
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
   }
 `;
 
