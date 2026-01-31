@@ -142,7 +142,7 @@ const Header = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--primary);
+      color: #3498db;
     }
 
     h2 { margin: 0; font-size: 1.4rem; color: var(--text); }

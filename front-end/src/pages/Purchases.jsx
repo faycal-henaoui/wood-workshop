@@ -291,7 +291,7 @@ const Purchases = () => {
                                         onChange={(e) => updateItem(index, 'id', e.target.value)}
                                     >
                                         <option value="">Select Material...</option>
-                                        <option value="new" style={{ fontWeight: 'bold', color: 'var(--primary)' }}>+ Create New Material</option>
+                                        <option value="new" style={{ fontWeight: 'bold', color: 'var(--secondary)' }}>+ Create New Material</option>
                                         {materials.map(m => (
                                             <option key={m.id} value={m.id}>{m.name} (Current: ${m.price})</option>
                                         ))}

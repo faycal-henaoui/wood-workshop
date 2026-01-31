@@ -178,7 +178,7 @@ const InvoiceCard = styled.div`
     .amount {
       font-size: 1.2rem;
       font-weight: bold;
-      color: var(--primary);
+      color: #27ae60;
     }
 
     .status {
