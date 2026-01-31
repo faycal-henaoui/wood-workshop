@@ -132,8 +132,8 @@ router.post('/', async (req, res) => {
 
   } catch (err) {
     await client.query('ROLLBACK');
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error('Purchase Error:', err);
+    res.status(500).json({ error: err.message, detailed: err.stack });
   } finally {
     client.release();
   }
