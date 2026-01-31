@@ -7,7 +7,7 @@
   },
   "scripts": {
     "install-all": "npm install --prefix back-end && npm install --prefix front-end",
-    "heroku-postbuild": "npm install --prefix front-end && npm run build --prefix front-end",
+    "heroku-postbuild": "cd front-end && npm install --include=dev && npm run build",
     "start": "node back-end/index.js"
   },
   "dependencies": {
