@@ -133,7 +133,7 @@ const SectionHeader = styled.div`
 
 const AddProductBtn = styled.button`
   background-color: var(--primary);
-  color: white;
+  color: var(--white);
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
