@@ -214,7 +214,9 @@ const Purchases = () => {
                 // Let's reset to today to avoid accidental backdating for next entry
                 setPurchaseDate(new Date().toISOString().split('T')[0]);
             } else {
-                addToast("Error saving purchase", "error");
+                const errorData = await res.json();
+                console.error("Purchase Error Details:", errorData);
+                addToast(`Error: ${errorData.error || "Saving failed"}`, "error");
             }
         } catch (err) {
             console.error(err);
@@ -224,7 +226,7 @@ const Purchases = () => {
         }
     };
 
-    const grandTotal = items.reduce((sum, item) => sum + (item.quantity * item.unit_price), 0);
+    const grandTotal = items.reduce((sum, item) => sum + ((parseFloat(item.quantity) || 0) * (parseFloat(item.unit_price) || 0)), 0);
 
     return (
         <Container>
