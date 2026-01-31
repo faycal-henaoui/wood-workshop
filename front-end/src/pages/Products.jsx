@@ -155,7 +155,7 @@ const SearchBar = styled.div`
 
 const Button = styled.button`
   background-color: ${props => props.$primary ? 'var(--primary)' : 'var(--input-bg)'};
-  color: ${props => props.$primary ? 'white' : 'var(--text-secondary)'};
+  color: ${props => props.$primary ? 'var(--white)' : 'var(--text-secondary)'};
   border: ${props => props.$primary ? 'none' : '1px solid var(--border)'};
   padding: 10px 20px;
   border-radius: 8px;
