@@ -244,7 +244,7 @@ const ProductItem = styled.div`
 
   .price {
     font-weight: bold;
-    color: #27ae60;
+    color: var(--primary);
   }
 `;
 
@@ -831,7 +831,7 @@ const Products = () => {
                             </div>
                         </div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                             <span style={{ color: '#27ae60', fontWeight: 'bold' }}>${cost.toFixed(2)}</span>
+                             <span style={{ color: 'var(--primary)', fontWeight: 'bold' }}>${cost.toFixed(2)}</span>
                              <Trash2 size={16} color="#e74c3c" style={{ cursor: 'pointer' }} onClick={() => removeMaterialFromRecipe(idx)} />
                         </div>
                     </div>

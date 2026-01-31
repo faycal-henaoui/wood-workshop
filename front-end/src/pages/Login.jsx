@@ -99,7 +99,7 @@ const InputGroup = styled.div`
   }
 
   &:focus-within svg {
-    color: #3b82f6;
+    color: var(--primary);
   }
 
   input {
