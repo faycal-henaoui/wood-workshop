@@ -292,7 +292,7 @@ const Purchases = () => {
                                         style={{ color: 'var(--text)' }}
                                     >
                                         <option value="">Select Material...</option>
-                                        <option value="new" style={{ fontWeight: 'bold', color: '#27ae60' }}>+ Create New Material</option>
+                                        <option value="new" style={{ fontWeight: 'bold', color: 'var(--white)' }}>+ Create New Material</option>
                                         {materials.map(m => (
                                             <option key={m.id} value={m.id} style={{ color: 'var(--text)' }}>{m.name} (Current: ${m.price})</option>
                                         ))}
