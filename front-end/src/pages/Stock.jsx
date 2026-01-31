@@ -519,7 +519,7 @@ const Stock = () => {
             <h3>{newMaterial.id ? 'Edit Material' : 'Add New Material'} <X size={20} style={{cursor: 'pointer'}} onClick={() => setShowModal(false)} /></h3>
             <form onSubmit={handleSaveMaterial}>
               <div style={{ marginBottom: '15px' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Material Name</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Material Name</label>
                 <input 
                   placeholder="Material Name" 
                   value={newMaterial.name}
@@ -530,7 +530,7 @@ const Stock = () => {
               </div>
 
               <div style={{ marginBottom: '15px' }}>
-                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Type</label>
+                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Type</label>
                 <select 
                   value={newMaterial.type}
                   onChange={e => {
@@ -576,7 +576,7 @@ const Stock = () => {
 
               <div style={{display: 'flex', gap: '15px', marginBottom: '15px'}}>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Quantity</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Quantity</label>
                   <input 
                     type="number" 
                     placeholder="Quantity" 
@@ -587,7 +587,7 @@ const Stock = () => {
                   />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Unit</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Unit</label>
                   <input 
                     placeholder="Unit (e.g. sheets, pcs)" 
                     value={newMaterial.unit}
@@ -600,7 +600,7 @@ const Stock = () => {
 
               <div style={{display: 'flex', gap: '15px', marginBottom: '20px'}}>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Price per Unit</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Price per Unit</label>
                   <input 
                     type="number" 
                     placeholder="Price per Unit" 
@@ -611,7 +611,7 @@ const Stock = () => {
                   />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: 'var(--text)', opacity: 0.7 }}>Low Stock Alert</label>
+                  <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', color: '#ccc' }}>Low Stock Alert</label>
                   <input 
                     type="number" 
                     placeholder="Low Stock Alert at" 
@@ -687,7 +687,7 @@ const Stock = () => {
               {filteredMaterials.map(m => (
                 <tr key={m.id} onClick={() => handleEditClick(m)} style={{ cursor: 'pointer' }}>
                   <td>
-                    <div style={{ fontWeight: '500', color: 'var(--text)' }}>{m.name}</div>
+                    <div style={{ fontWeight: '500', color: 'white' }}>{m.name}</div>
                     {m.type === 'Sheet' && Number(m.length) > 0 && Number(m.width) > 0 && (
                       <div style={{ fontSize: '0.75rem', color: '#E67E22', marginTop: '2px' }}>
                         {Number(m.length)} x {Number(m.width)} cm
@@ -727,7 +727,7 @@ const Stock = () => {
               <ScrapCard key={s.id}>
                 <div className="info">
                   <strong>{s.name}</strong>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--text)', opacity: 0.7, margin: '4px 0' }}>
+                  <div style={{ fontSize: '0.85rem', color: '#ccc', margin: '4px 0' }}>
                      {s.dimensions && s.dimensions !== 'Unknown' ? (
                        <span style={{ color: '#E67E22', fontWeight: 'bold' }}>{s.dimensions} cm</span>
                      ) : (

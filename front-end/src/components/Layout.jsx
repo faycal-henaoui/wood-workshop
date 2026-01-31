@@ -39,14 +39,14 @@ const LogoSection = styled.div`
   }
 
   h2 {
-    color: #ffffff;
+    color: var(--white);
     font-size: 1.4rem;
     margin: 0;
     font-weight: 800;
     letter-spacing: -0.5px;
     
     span {
-      color: #fbbf24;
+      color: var(--secondary);
     }
   }
 
@@ -69,7 +69,7 @@ const MobileMenuButton = styled.button`
   display: none;
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: var(--white);
   cursor: pointer;
   padding: 5px;
 
@@ -82,17 +82,17 @@ const TopNavLink = styled(Link)`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: ${props => props.$active ? '#ffffff' : 'rgba(255,255,255,0.7)'};
+  color: ${props => props.$active ? 'var(--secondary)' : 'var(--text)'};
   text-decoration: none;
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 8px;
-  background-color: ${props => props.$active ? 'rgba(255, 255, 255, 0.2)' : 'transparent'};
+  background-color: ${props => props.$active ? 'rgba(230, 126, 34, 0.1)' : 'transparent'};
   transition: all 0.2s;
 
   &:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--secondary);
+    background-color: rgba(230, 126, 34, 0.05);
   }
 `;
 
@@ -145,7 +145,7 @@ const RightSidebarContainer = styled.div`
 const SidebarTrigger = styled.div`
   width: 10px;
   height: 100%;
-  background: var(--card-bg); /* Visible trigger zone */
+  background: var(--primary); /* Visible trigger zone */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -168,7 +168,7 @@ const SidebarTrigger = styled.div`
 
 const SidebarContent = styled.div`
   width: 250px;
-  background-color: var(--card-bg);
+  background-color: var(--primary);
   border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
