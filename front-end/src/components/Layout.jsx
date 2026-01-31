@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const Navbar = styled.div`
   height: 70px;
-  background-color: var(--primary);
+  background-color: var(--card-bg);
   border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -145,7 +145,7 @@ const RightSidebarContainer = styled.div`
 const SidebarTrigger = styled.div`
   width: 10px;
   height: 100%;
-  background: var(--primary); /* Visible trigger zone */
+  background: var(--card-bg); /* Visible trigger zone */
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -168,7 +168,7 @@ const SidebarTrigger = styled.div`
 
 const SidebarContent = styled.div`
   width: 250px;
-  background-color: var(--primary);
+  background-color: var(--card-bg);
   border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;

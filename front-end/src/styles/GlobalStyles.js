@@ -7,7 +7,7 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   :root {
-    --primary: ${props => props.theme === 'light' ? '#ffffff' : '#1E1E1E'};
+    --primary: #2563eb;
     --secondary: #E67E22;
     --accent: #D35400;
     --background: ${props => props.theme === 'light' ? '#f4f4f9' : '#121212'};
