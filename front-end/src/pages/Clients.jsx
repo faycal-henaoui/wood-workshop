@@ -56,7 +56,7 @@ const SearchInput = styled.div`
 
 const NewClientBtn = styled.button`
   background-color: var(--primary);
-  color: white;
+  color: var(--white);
   border: none;
   padding: 12px;
   border-radius: 8px;
