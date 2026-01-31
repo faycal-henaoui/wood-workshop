@@ -1,0 +1,16 @@
+{
+  "name": "workshop-app",
+  "version": "1.0.0",
+  "description": "Heroku deployment root",
+  "engines": {
+    "node": "20.x"
+  },
+  "scripts": {
+    "install-all": "npm install --prefix back-end && npm install --prefix front-end",
+    "heroku-postbuild": "npm install --prefix front-end && npm run build --prefix front-end",
+    "start": "node back-end/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}

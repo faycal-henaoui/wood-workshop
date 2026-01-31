@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - HENAOUI FAYCAL</title>
+    <style>
+        :root {
+            --sidebar-bg: #1a2a3a;
+            --main-bg: #ffffff;
+            --accent-color: #00a8ff;
+            --text-dark: #2d3436;
+            --text-light: #f5f6fa;
+            --border-color: #dcdde1;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .cv-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            background: var(--main-bg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            min-height: 1100px;
+        }
+
+        /* LEFT COLUMN */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            color: var(--text-light);
+            padding: 40px 30px;
+        }
+
+        .sidebar h1 {
+            font-size: 24px;
+            margin: 0;
+            line-height: 1.2;
+            color: var(--accent-color);
+            text-transform: uppercase;
+        }
+
+        .sidebar .title {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        .contact-item {
+            font-size: 13px;
+            margin-bottom: 15px;
+            word-break: break-all;
+        }
+
+        .contact-item strong { color: var(--accent-color); display: block; margin-bottom: 2px; }
+
+        .sidebar-section { margin-top: 40px; }
+        .sidebar-section h3 {
+            font-size: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pill-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill {
+            background: rgba(255,255,255,0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* RIGHT COLUMN */
+        .main-content { padding: 40px 50px; }
+        
+        section { margin-bottom: 35px; }
+        h2 {
+            font-size: 18px;
+            color: var(--sidebar-bg);
+            border-left: 4px solid var(--accent-color);
+            padding-left: 15px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .experience-item, .edu-item { margin-bottom: 25px; }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 15px;
+        }
+        .item-sub { color: var(--accent-color); font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        
+        p, li { font-size: 14px; color: #444; line-height: 1.6; }
+        ul { padding-left: 18px; }
+
+        @media print {
+            body { padding: 0; }
+            .cv-wrapper { box-shadow: none; width: 100%; grid-template-columns: 250px 1fr; }
+            .sidebar { -webkit-print-color-adjust: exact; }
+        }
+
+        @media (max-width: 768px) {
+            .cv-wrapper { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-wrapper">
+        <div class="sidebar">
+            <h1>Henaoui<br>Faycal</h1>
+            <span class="title">Web Developer & AI Student</span>
+
+            <div class="sidebar-section">
+                <div class="contact-item"><strong>Phone</strong> +213 557 504 346</div>
+                <div class="contact-item"><strong>Email</strong> faycalhenaoui1@gmail.com</div>
+                <div class="contact-item"><strong>Location</strong> Tlemcen, Algeria</div>
+                <div class="contact-item"><strong>GitHub</strong> github.com/FaycalHen</div>
+                <div class="contact-item"><strong>LinkedIn</strong> linkedin.com/in/faycal-henaoui</div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Programming</h3>
+                <div class="pill-container">
+                    <span class="pill">HTML/CSS</span> <span class="pill">JavaScript</span>
+                    <span class="pill">React</span> <span class="pill">Python</span>
+                    <span class="pill">Java</span> <span class="pill">R</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Tools</h3>
+                <div class="pill-container">
+                    <span class="pill">Git</span> <span class="pill">Docker</span>
+                    <span class="pill">VS Code</span> <span class="pill">Machine Learning</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Languages</h3>
+                <div class="pill-container">
+                    <span class="pill">Arabic</span> <span class="pill">English</span>
+                    <span class="pill">French</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <section>
+                <h2>Professional Summary</h2>
+                <p>
+                    Highly motivated and detail-oriented web developer with 3 years of experience specializing in both front-end and back-end ecosystems. Currently pursuing advanced studies in <strong>Artificial Intelligence</strong>, bridging the gap between robust software engineering and intelligent data-driven solutions.
+                </p>
+            </section>
+
+            <section>
+                <h2>Experience</h2>
+                
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span>Freelance</span>
+                        <span>Dec 2025 – Present</span>
+                    </div>
+                    <div class="item-sub">Platform Development - WorkshopCraft</div>
+                    <ul>
+                        <li>Engineered an ERP platform tailored for woodworking enterprise management.</li>
+                        <li>Implemented core modules for inventory tracking and resource allocation, significantly increasing operational efficiency.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span>Freelance</span>
+                        <span>Aug 2025 – Present</span>
+                    </div>
+                    <div class="item-sub">Platform Development - RouteExpress</div>
+                    <ul>
+                        <li>Developed a logistics solution for high-volume delivery companies (e.g., concrete suppliers).</li>
+                        <li>Built an algorithmic routing system to solve the "Delivery by Zones" problem, optimizing pricing and travel time.</li>
+                    </ul>
+                </div>
+
+                <div class="experience-item">
+                    <div class="item-header">
+                        <span>Internship (EGC)</span>
+                        <span>July 2025</span>
+                    </div>
+                    <div class="item-sub">SI Deployment & AI Integration</div>
+                    <ul>
+                        <li>Consulted for "Eurl BHT" to automate administrative bottlenecks.</li>
+                        <li>Developed an AI-powered Information Extraction solution to automate invoice processing and data entry.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Education</h2>
+                <div class="edu-item">
+                    <div class="item-header">
+                        <span>Master's in Artificial Intelligence</span>
+                        <span>2023 – Present</span>
+                    </div>
+                    <div class="item-sub">Aboubekre Belkaid University</div>
+                </div>
+
+                <div class="edu-item">
+                    <div class="item-header">
+                        <span>Bachelor of Science in IT</span>
+                        <span>2020 – 2023</span>
+                    </div>
+                    <div class="item-sub">Aboubekre Belkaid University</div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Specializations</h2>
+                <p>
+                    <strong>Artificial Intelligence:</strong> Foundational knowledge in Machine Learning, Neural Networks, and Data Analysis. <br>
+                    <strong>Agile:</strong> Experienced in Scrum methodologies and iterative project management.
+                </p>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>

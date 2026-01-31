@@ -1,0 +1,31 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "migrate": "node-pg-migrate",
+    "reset-db": "node schema.js && node seed_admin.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "html2pdf.js": "^0.12.1",
+    "jsonwebtoken": "^9.0.3",
+    "node-pg-migrate": "^8.0.4",
+    "pg": "^8.16.3",
+    "recharts": "^3.6.0",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

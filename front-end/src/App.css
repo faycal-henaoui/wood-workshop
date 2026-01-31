@@ -1,0 +1,45 @@
+/* Modern Reset & Layout Fixes */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left; /* Changed from center for dashboard layout */
+  height: 100vh;
+}
+
+/* Scrollbar Styling for Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* Mobile Friendly Tables */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  display: block;
+}
+
+/* Ensure images don't overflow */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Utility to hide elements on mobile if needed */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
