@@ -86,7 +86,7 @@ router.post("/login", validInfo, async (req, res) => {
     res.json({ token, user: { username: user.rows[0].username, role: user.rows[0].role } });
   } catch (err) {
     console.error(err.message);
-    res.status(500).json({ error: err.message, stack: err.stack });
+    res.status(500).send("Server Error");
   }
 });
 
