@@ -687,7 +687,7 @@ const Stock = () => {
               {filteredMaterials.map(m => (
                 <tr key={m.id} onClick={() => handleEditClick(m)} style={{ cursor: 'pointer' }}>
                   <td>
-                    <div style={{ fontWeight: '500', color: 'white' }}>{m.name}</div>
+                    <div style={{ fontWeight: '500' }}>{m.name}</div>
                     {m.type === 'Sheet' && Number(m.length) > 0 && Number(m.width) > 0 && (
                       <div style={{ fontSize: '0.75rem', color: '#E67E22', marginTop: '2px' }}>
                         {Number(m.length)} x {Number(m.width)} cm

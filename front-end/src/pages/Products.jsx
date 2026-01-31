@@ -244,7 +244,7 @@ const ProductItem = styled.div`
 
   .price {
     font-weight: bold;
-    color: var(--primary);
+    color: #27ae60;
   }
 `;
 
@@ -793,8 +793,8 @@ const Products = () => {
               </VisualPreview>
             </InputGroup>
 
-            <div style={{ borderTop: '1px solid #333', paddingTop: '20px' }}>
-              <h4 style={{ color: 'white', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
+              <h4 style={{ color: 'var(--text)', marginBottom: '15px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Layers size={16} /> Material Recipe
               </h4>
               
@@ -913,7 +913,7 @@ const Products = () => {
                     type="number" 
                     value={formData.labor_cost}
                     onChange={e => setFormData({...formData, labor_cost: parseFloat(e.target.value)})}
-                    style={{ width: '100%', padding: '5px', background: '#333', border: 'none', color: 'white', textAlign: 'right' }}
+                    style={{ width: '100%', padding: '5px', background: 'var(--input-bg)', border: 'none', color: 'var(--text)', textAlign: 'right' }}
                   />
                 </div>
               </div>
