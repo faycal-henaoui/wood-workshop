@@ -84,8 +84,8 @@ router.post('/', async (req, res) => {
       if (item.isNew && !materialId) {
          // Defaults for new material if not fully specified
          const newMat = await client.query(
-          `INSERT INTO materials (name, type, quantity, unit, price, low_stock_threshold, length, width) 
-           VALUES ($1, $2, 0, $3, 0, 10, 0, 0) RETURNING id`, // Start with 0 qty/price, we update below
+          `INSERT INTO materials (name, type, quantity, unit, price, low_stock_threshold) 
+           VALUES ($1, $2, 0, $3, 0, 10) RETURNING id`, 
           [item.name, item.type || 'Standard', item.unit || 'pcs']
          );
          materialId = newMat.rows[0].id;
