@@ -378,7 +378,7 @@ const Purchases = () => {
                 </Table>
                 
                 <div style={{ marginTop: '20px', textAlign: 'right', fontSize: '1.5rem', fontWeight: 'bold' }}>
-                    Total Invoice: <span style={{ color: 'var(--primary)' }}>${grandTotal.toFixed(2)}</span>
+                    Total Invoice: <span style={{ color: '#27ae60' }}>${grandTotal.toFixed(2)}</span>
                 </div>
             </Card>
 
