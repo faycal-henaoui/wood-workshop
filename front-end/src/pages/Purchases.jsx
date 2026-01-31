@@ -109,7 +109,7 @@ const TableRow = styled.div`
 
 const Btn = styled.button`
   background: ${props => props.$primary ? 'var(--primary)' : 'var(--input-bg)'};
-  color: ${props => props.$primary ? 'white' : 'var(--text)'};
+  color: ${props => props.$primary ? 'var(--white)' : 'var(--text)'};
   border: 1px solid ${props => props.$primary ? 'transparent' : 'var(--border)'};
   padding: 10px 20px;
   border-radius: 8px;
