@@ -2,9 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
+const fixDatabase = require('./fix_schema'); // Import the fix script
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Run DB fix on startup
+fixDatabase();
 
 /**
  * Middleware Setup
