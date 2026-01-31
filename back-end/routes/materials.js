@@ -19,19 +19,19 @@ router.get('/', async (req, res) => {
 /**
  * Add New Material
  * Creates a new raw material record.
- * Accepts: name, type, quantity, unit, price, thresholds, and dimensions (length/width).
+ * Accepts: name, type, quantity, unit, price, thresholds.
  */
 router.post('/', async (req, res) => {
   try {
-    const { name, type, quantity, unit, price, low_stock_threshold, length, width } = req.body;
+    const { name, type, quantity, unit, price, low_stock_threshold } = req.body;
     const newMaterial = await pool.query(
-      'INSERT INTO materials (name, type, quantity, unit, price, low_stock_threshold, length, width) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-      [name, type, quantity, unit, price, low_stock_threshold, length || 0, width || 0]
+      'INSERT INTO materials (name, type, quantity, unit, price, low_stock_threshold) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [name, type, quantity, unit, price, low_stock_threshold]
     );
     res.json(newMaterial.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ error: err.message, detailed: err.stack });
   }
 });
 
@@ -58,11 +58,11 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, type, quantity, unit, price, low_stock_threshold, length, width } = req.body;
+    const { name, type, quantity, unit, price, low_stock_threshold } = req.body;
     
     const updateMaterial = await pool.query(
-      'UPDATE materials SET name = $1, type = $2, quantity = $3, unit = $4, price = $5, low_stock_threshold = $6, length = $7, width = $8 WHERE id = $9 RETURNING *',
-      [name, type, quantity, unit, price, low_stock_threshold, length || 0, width || 0, id]
+      'UPDATE materials SET name = $1, type = $2, quantity = $3, unit = $4, price = $5, low_stock_threshold = $6 WHERE id = $7 RETURNING *',
+      [name, type, quantity, unit, price, low_stock_threshold, id]
     );
 
     if (updateMaterial.rows.length === 0) {
@@ -72,7 +72,7 @@ router.put('/:id', async (req, res) => {
     res.json(updateMaterial.rows[0]);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ error: err.message, detailed: err.stack });
   }
 });
 
