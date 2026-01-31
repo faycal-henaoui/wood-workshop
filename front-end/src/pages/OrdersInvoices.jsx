@@ -495,7 +495,7 @@ const OrdersInvoices = () => {
             <button 
                 style={{ 
                     background: viewMode === 'sales' ? 'var(--primary)' : 'transparent',
-                    color: viewMode === 'sales' ? 'white' : 'var(--text-secondary)',
+                    color: viewMode === 'sales' ? 'var(--white)' : 'var(--text-secondary)',
                     border: viewMode === 'sales' ? 'none' : '1px solid var(--border)',
                     padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontWeight: 600
                 }}
@@ -506,7 +506,7 @@ const OrdersInvoices = () => {
             <button 
                 style={{ 
                     background: viewMode === 'purchases' ? 'var(--primary)' : 'transparent',
-                    color: viewMode === 'purchases' ? 'white' : 'var(--text-secondary)',
+                    color: viewMode === 'purchases' ? 'var(--white)' : 'var(--text-secondary)',
                     border: viewMode === 'purchases' ? 'none' : '1px solid var(--border)',
                     padding: '8px 16px', borderRadius: '6px', cursor: 'pointer', fontWeight: 600
                 }}
