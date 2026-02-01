@@ -687,18 +687,46 @@ const InvoiceMaker = () => {
    * Handles server-side validation errors (like "Not enough stock").
    */
   const handleSave = async () => {
-    if (!clientName) {
-      addToast("Please enter a client name", "error");
+    // 1. Validate Client Name (Alphabetical only, allowing spaces, hyphens, apostrophes)
+    const nameRegex = /^[a-zA-Z\s'-]+$/;
+    if (!clientName || !nameRegex.test(clientName)) {
+      addToast("Please enter a valid client name (letters only).", "error");
       return;
     }
+
     if (items.length === 0) {
       addToast("Please add at least one item", "error");
       return;
     }
 
+    // 2. Validate Labor Cost
+    const labor = parseFloat(laborCost);
+    if (isNaN(labor) || labor < 0) {
+       addToast("Labor cost must be a positive number.", "error");
+       return;
+    }
+
+    // 3. Validate Items
+    for (const item of items) {
+        const qty = parseFloat(item.quantity_used);
+        
+        // Positive Check
+        if (isNaN(qty) || qty <= 0) {
+            addToast(`Quantity for "${item.description || 'Unknown Item'}" must be positive.`, "error");
+            return;
+        }
+
+        // Integer Check for Non-Sheet Materials
+        // Note: Products act like Units, so they must be integers usually? 
+        // User spec: "only if the type is "sheet" that it can be a float"
+        if (!item.is_sheet_material && !Number.isInteger(qty)) {
+             addToast(`Quantity for "${item.description}" must be a whole number (not a sheet).`, "error");
+             return;
+        }
+    }
+
     setLoading(true);
     const subtotal = calculateSubtotal();
-    const labor = parseFloat(laborCost) || 0;
     const total = subtotal + labor;
 
     const payload = {
