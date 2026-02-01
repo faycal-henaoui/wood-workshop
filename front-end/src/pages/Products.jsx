@@ -516,6 +516,12 @@ const Products = () => {
   const handleUpdateProduct = async () => {
       if (!editingProduct) return;
       
+      const labor = parseFloat(editingProduct.labor_cost);
+      if (isNaN(labor) || labor < 0) {
+          addToast('Labor cost must be a positive number.', 'error');
+          return;
+      }
+      
       // Calculate new base price
       const matCost = editingProduct.materials.reduce((acc, item) => {
         const mat = materials.find(m => m.id === item.material_id);
@@ -555,11 +561,19 @@ const Products = () => {
 
   const addMatToEdit = () => {
       const qty = parseFloat(editMat.quantity);
-      if (!editMat.id || isNaN(qty) || qty <= 0) return;
+      if (!editMat.id || isNaN(qty) || qty <= 0) {
+          addToast("Please select a material and enter a positive quantity.", "error");
+          return;
+      }
       
       // Use loose equality to match string ID from select with number ID from DB
       const mat = materials.find(m => m.id == editMat.id);
       if (!mat) return;
+
+      if (mat.type !== 'Sheet' && !Number.isInteger(qty)) {
+          addToast("Quantity must be a whole number for this material type.", "error");
+          return;
+      }
 
       const newItem = {
           material_id: mat.id,
@@ -625,10 +639,21 @@ const Products = () => {
   };
 
   const addMaterialToRecipe = () => {
-      if (!currentMat.id || currentMat.quantity <= 0) return;
+      if (!currentMat.id) return;
+      const qty = parseFloat(currentMat.quantity);
+      if (isNaN(qty) || qty <= 0) {
+        addToast("Quantity must be a positive number.", "error");
+        return;
+      }
       
       const matDetails = materials.find(m => m.id === currentMat.id);
       if (!matDetails) return;
+
+      // Integer verification for non-sheet materials
+      if (matDetails.type !== 'Sheet' && !Number.isInteger(qty)) {
+          addToast("Quantity must be a whole number for this material type.", "error");
+          return;
+      }
 
       setFormData({
           ...formData,
@@ -659,6 +684,12 @@ const Products = () => {
     if (!formData.name || formData.materials.length === 0) {
       addToast('Please fill in name and add at least one material.', 'error');
       return;
+    }
+
+    const labor = parseFloat(formData.labor_cost);
+    if (isNaN(labor) || labor < 0) {
+        addToast('Labor cost must be a positive number.', 'error');
+        return;
     }
 
     setLoading(true);
@@ -862,7 +893,11 @@ const Products = () => {
                         step="0.01"
                         placeholder="0.00"
                         value={currentMat.quantity}
-                        onChange={e => setCurrentMat({...currentMat, quantity: e.target.value})}
+                        onChange={e => {
+                            const val = parseFloat(e.target.value);
+                            if (val < 0) return;
+                            setCurrentMat({...currentMat, quantity: e.target.value})
+                        }}
                     />
                     </Field>
                  </div>
@@ -912,7 +947,11 @@ const Products = () => {
                   <input 
                     type="number" 
                     value={formData.labor_cost}
-                    onChange={e => setFormData({...formData, labor_cost: parseFloat(e.target.value)})}
+                    onChange={e => {
+                        const val = parseFloat(e.target.value);
+                        if (val < 0) return;
+                        setFormData({...formData, labor_cost: e.target.value})
+                    }}
                     style={{ width: '100%', padding: '5px', background: 'var(--input-bg)', border: 'none', color: 'var(--text)', textAlign: 'right' }}
                   />
                 </div>
@@ -1073,7 +1112,11 @@ const Products = () => {
                                 <input 
                                     type="number" value={editMat.quantity}
                                     placeholder="#"
-                                    onChange={e => setEditMat({...editMat, quantity: e.target.value})}
+                                    onChange={e => {
+                                        const val = parseFloat(e.target.value);
+                                        if (val < 0) return;
+                                        setEditMat({...editMat, quantity: e.target.value})
+                                    }}
                                 />
                              </Field>
                          </div>
@@ -1098,7 +1141,11 @@ const Products = () => {
                                  <input 
                                     type="number" 
                                     value={editingProduct.labor_cost}
-                                    onChange={e => setEditingProduct({...editingProduct, labor_cost: e.target.value})}
+                                    onChange={e => {
+                                        const val = parseFloat(e.target.value);
+                                        if (val < 0) return;
+                                        setEditingProduct({...editingProduct, labor_cost: e.target.value})
+                                    }}
                                     style={{ textAlign: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}
                                  />
                              </Field>
