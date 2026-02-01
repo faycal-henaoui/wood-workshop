@@ -576,6 +576,11 @@ const InvoiceMaker = () => {
     const newItems = [...items];
     const item = newItems[index];
 
+    // 1. Global Negative Check for Quantity (Products AND Materials)
+    if (field === 'quantity_used') {
+       if (value < 0) return; // Prevent negative input entirely
+    }
+
     // Handle Quantity Limits (Only for Materials)
     if (field === 'quantity_used' && !item.is_product) {
       const currentMaterialId = item.material_id;
@@ -586,7 +591,6 @@ const InvoiceMaker = () => {
           addToast(`Only ${material.quantity} ${material.unit} available in stock.`, 'warning');
           return;
         }
-        if (enteredQty < 0) return;
       }
     }
 
@@ -799,7 +803,24 @@ const InvoiceMaker = () => {
         </InfoBlock>
 
         <InfoBlock style={{ gridColumn: '1 / -1', borderTop: '1px solid var(--border)', paddingTop: '20px' }}>
-           <label><Layers size={16} /> Document Type</label>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+             <label><Layers size={16} /> Document Type</label>
+             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <label style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Labor Cost ($)</label>
+                <input 
+                  type="number" 
+                  min="0"
+                  placeholder="0.00" 
+                  value={laborCost}
+                  onChange={(e) => {
+                      const val = parseFloat(e.target.value);
+                      if (val < 0) return; // Block negative
+                      setLaborCost(e.target.value);
+                  }}
+                  style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text)', padding: '8px', borderRadius: '6px', width: '100px' }}
+                />
+             </div>
+          </div>
            <div style={{ display: 'flex', gap: '40px', marginTop: '10px', background: 'var(--bg-secondary)', padding: '15px', borderRadius: '8px', flexWrap: 'wrap' }}>
               <label style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', fontWeight: invoiceType === 'invoice' ? '700' : '400', color: invoiceType === 'invoice' ? '#2ECC71' : 'var(--text)', gap: '10px' }}>
                  <input 
