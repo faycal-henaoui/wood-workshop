@@ -430,6 +430,37 @@ const Stock = () => {
 
   const handleSaveMaterial = async (e) => {
     e.preventDefault();
+
+    // Input Validations
+    if (newMaterial.type === 'Sheet') {
+        const l = parseFloat(newMaterial.length || 0);
+        const w = parseFloat(newMaterial.width || 0);
+
+        if (l < 0 || w < 0) {
+            addToast("Dimensions (length/width) can't be negative", "error");
+            return;
+        }
+    }
+
+    const qty = parseFloat(newMaterial.quantity);
+    const price = parseFloat(newMaterial.price);
+    const lowStock = parseFloat(newMaterial.low_stock_threshold);
+
+    if (isNaN(qty) || qty < 0) {
+        addToast("Quantity must be a valid positive number", "error");
+        return;
+    }
+
+    if (isNaN(price) || price < 0) {
+        addToast("Price must be a valid positive number", "error");
+        return;
+    }
+
+    if (isNaN(lowStock) || lowStock < 0) {
+        addToast("Low Stock threshold must be a valid positive number", "error");
+        return;
+    }
+
     const url = newMaterial.id 
       ? `${API_URL}/api/materials/${newMaterial.id}`
       : `${API_URL}/api/materials`;
