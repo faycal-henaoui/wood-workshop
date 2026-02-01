@@ -173,7 +173,7 @@ const TableRow = styled.div`
   color: var(--text);
   padding: 15px;
   border-radius: 8px;
-  align-items: center;
+  align-items: center; /* Ensures all items in the grid row are vertically centered */
   margin-bottom: 12px;
   border: 1px solid var(--border);
   transition: border-color 0.2s;
@@ -190,11 +190,19 @@ const TableRow = styled.div`
     border-radius: 6px;
     width: 95%;
     font-size: 0.95rem;
+    height: 42px; /* Force consistent height for inputs/selects */
+    box-sizing: border-box; /* Ensure padding doesn't affect height */
     
     &:focus {
       border-color: var(--primary);
       outline: none;
     }
+  }
+
+  /* Specific fix for manual dimension inputs to align with main row */
+  .dim-input {
+      height: 32px !important; /* Smaller height for sub-inputs */
+      padding: 4px 8px !important;
   }
 
   .scrap-info {
@@ -909,22 +917,25 @@ const InvoiceMaker = () => {
                  materials.find(m => m.id === item.material_id)?.length > 0 && (
                   <div style={{ display: 'flex', gap: '5px', marginBottom: '8px' }}>
                     <input 
+                      className="dim-input"
                       type="number" placeholder="#" title="Pieces"
                       value={item.pieces}
                       onChange={(e) => updateItem(index, 'pieces', e.target.value)}
-                      style={{ width: '40px', padding: '6px' }}
+                      style={{ width: '40px' }}
                     />
                     <input 
+                      className="dim-input"
                       type="number" placeholder="L" title="Length (cm)"
                       value={item.cut_length}
                       onChange={(e) => updateItem(index, 'cut_length', e.target.value)}
-                      style={{ width: '50px', padding: '6px' }}
+                      style={{ width: '50px' }}
                     />
                     <input 
+                      className="dim-input"
                       type="number" placeholder="W" title="Width (cm)"
                       value={item.cut_width}
                       onChange={(e) => updateItem(index, 'cut_width', e.target.value)}
-                      style={{ width: '50px', padding: '6px' }}
+                      style={{ width: '50px' }}
                     />
                   </div>
                 )}
