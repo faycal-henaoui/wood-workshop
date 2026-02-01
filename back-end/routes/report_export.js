@@ -18,20 +18,22 @@ router.get('/detailed', async (req, res) => {
 
     // --- 1. Fetch Sales Invoices ---
     // Matches standard SQL date functions: EXTRACT(MONTH FROM date)
+    // Linked with Clients table to get names
     const invoicesResult = await pool.query(`
       SELECT 
-        id, 
-        invoice_number, 
-        client_name, 
-        total_amount, 
-        labor_cost, 
-        status, 
-        created_at 
-      FROM invoices
+        i.id, 
+        i.invoice_number, 
+        c.name as client_name, 
+        i.total_amount, 
+        i.labor_cost, 
+        i.status, 
+        i.created_at 
+      FROM invoices i
+      JOIN clients c ON i.client_id = c.id
       WHERE 
-        EXTRACT(MONTH FROM created_at) = $1 AND 
-        EXTRACT(YEAR FROM created_at) = $2
-      ORDER BY created_at ASC
+        EXTRACT(MONTH FROM i.created_at) = $1 AND 
+        EXTRACT(YEAR FROM i.created_at) = $2
+      ORDER BY i.created_at ASC
     `, [month, year]);
 
     // --- 2. Fetch Purchases ---
@@ -39,7 +41,6 @@ router.get('/detailed', async (req, res) => {
       SELECT 
         id, 
         supplier_name, 
-        description,
         total_amount, 
         purchase_date 
       FROM purchases
@@ -51,7 +52,10 @@ router.get('/detailed', async (req, res) => {
 
     // Calculate Totals using Javascript to ensure consistency with what we return
     const sales = invoicesResult.rows;
-    const purchases = purchasesResult.rows;
+    const purchases = purchasesResult.rows.map(p => ({
+        ...p,
+        description: p.description || `Purchase Order #${p.id}` // Fallback description
+    }));
 
     // Financial calculations
     const total_sales_paid = sales
@@ -83,7 +87,10 @@ router.get('/detailed', async (req, res) => {
 
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).json({ 
+        error: 'Export Failed', 
+        details: err.message 
+    });
   }
 });
 
