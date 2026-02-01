@@ -4,50 +4,65 @@ import styled from 'styled-components';
 const ReportContainer = styled.div`
   width: 210mm; /* A4 width */
   min-height: 297mm; /* A4 height */
-  padding: 20mm;
+  padding: 10mm; /* Reduced padding to maximize space */
   background: white;
   color: black;
-  font-family: 'Times New Roman', serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+
+  /* Reset any global dark mode styles */
+  h1, h2, h3, h4, h5, h6, p, span, div, td, th {
+    color: black !important; /* Force black text */
+  }
 `;
 
 const Header = styled.div`
   text-align: center;
-  border-bottom: 2px solid black;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  border-bottom: 3px solid #000;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
 
-  h1 { margin: 0; font-size: 24px; text-transform: uppercase; }
-  p { margin: 5px 0 0 0; font-size: 14px; color: #555; }
+  h1 { margin: 0; font-size: 22px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; }
+  p { margin: 2px 0 0 0; font-size: 12px; color: #333 !important; }
 `;
 
 const SectionTitle = styled.h3`
-  background: #f0f0f0;
-  padding: 5px 10px;
-  margin: 20px 0 10px 0;
-  border-left: 5px solid #333;
-  font-size: 16px;
+  background: #333; /* Dark background */
+  color: white !important; /* White text explicitly */
+  padding: 6px 10px;
+  margin: 15px 0 10px 0;
+  font-size: 14px;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px; /* Slight rounded corners */
 `;
 
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: 11px; /* Slightly smaller to fit more */
   
   th {
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #000;
+    background-color: #f8f8f8;
+    color: #000 !important;
     text-align: left;
-    padding: 5px;
-    font-weight: bold;
+    padding: 6px 4px;
+    font-weight: 700;
     text-transform: uppercase;
   }
   
   td {
     border-bottom: 1px solid #ddd;
-    padding: 5px;
+    padding: 6px 4px;
+    color: #000 !important;
+  }
+
+  tr:nth-child(even) {
+    background-color: #fafafa;
   }
 
   tr:last-child td { border-bottom: none; }
