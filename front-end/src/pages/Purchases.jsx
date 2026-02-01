@@ -338,9 +338,11 @@ const Purchases = () => {
                                         )}
                                     </div>
                                 ) : (
-                                    <div style={{ padding: '8px', color: 'var(--text-secondary)', fontSize: '0.9rem', background: 'var(--input-bg)', borderRadius: '6px', border: '1px solid var(--border)' }}>
-                                        {item.type === 'Sheet' ? 'Sheet' : (item.unit || 'pcs')}
-                                    </div>
+                                    <input 
+                                        value={item.type === 'Sheet' ? 'Sheet' : (item.unit || 'pcs')}
+                                        disabled
+                                        style={{ color: 'var(--text-secondary)', cursor: 'default' }}
+                                    />
                                 )}
                             </div>
                             <div>
