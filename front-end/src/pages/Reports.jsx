@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
-import { DollarSign, TrendingUp, Package, Hammer, Calendar } from 'lucide-react';
+import { DollarSign, TrendingUp, Package, Hammer, Calendar, Download } from 'lucide-react';
+import MonthlyReportTemplate from '../components/MonthlyReportTemplate';
 import { API_URL } from '../config';
 
 const Container = styled.div`
@@ -95,10 +96,54 @@ const ChartCard = styled(Card)`
  * - Top Selling Materials
  */
 const Reports = () => {
+    console.log("Reports Component Rendering...");
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [timeRange, setTimeRange] = useState(12); // Months
     const [statusFilter, setStatusFilter] = useState('All'); // 'All', 'Paid', 'Pending'
+
+    // Report Export State
+    const [reportMonth, setReportMonth] = useState(new Date().getMonth() + 1);
+    const [reportYear, setReportYear] = useState(new Date().getFullYear());
+    const [downloading, setDownloading] = useState(false);
+    const [reportData, setReportData] = useState(null);
+
+    const handleDownloadReport = async () => {
+        setDownloading(true);
+        try {
+            const res = await fetch(`${API_URL}/api/report-export/detailed?month=${reportMonth}&year=${reportYear}`);
+            const jsonData = await res.json();
+            
+            if (!res.ok) throw new Error(jsonData.message || 'Failed to fetch report data');
+
+            setReportData(jsonData);
+
+            // Dynamically import html2pdf to ensure it loads only when needed
+            const html2pdfModule = await import('html2pdf.js');
+            const html2pdf = html2pdfModule.default || html2pdfModule;
+
+            // Wait for React to render the hidden template
+            setTimeout(() => {
+                const element = document.getElementById('monthly-report-pdf');
+                const opt = {
+                    margin: 0,
+                    filename: `Monthly_Report_${reportYear}_${reportMonth}.pdf`,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                html2pdf().from(element).set(opt).save().then(() => {
+                    setDownloading(false);
+                    setReportData(null); // Cleanup
+                });
+            }, 500);
+
+        } catch (error) {
+            console.error("Export Error:", error);
+            alert("Error exporting report: " + error.message);
+            setDownloading(false);
+        }
+    };
 
     /**
      * Fetch Data
@@ -122,10 +167,7 @@ const Reports = () => {
         fetchFinancialData();
     }, [fetchFinancialData]);
 
-    if (loading) return <Container>Loading Financial Data...</Container>;
-    if (!data || !data.summary) return <Container>No data available</Container>;
-
-    const s = data.summary;
+    const s = data?.summary || { revenue: 0, net_profit: 0, labor_income: 0, material_profit: 0, cogs: 0, purchases_cashflow: 0 }; 
     const profitMargin = s.revenue > 0 ? ((s.net_profit / s.revenue) * 100).toFixed(1) : 0;
     
     // Data for Pie Chart
@@ -138,6 +180,11 @@ const Reports = () => {
 
     return (
         <Container>
+            {/* Hidden Report Template */}
+            <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+                {reportData && <MonthlyReportTemplate data={reportData} />}
+            </div>
+
             <Header>
                 <h2>Financial Performance</h2>
                 <div style={{display: 'flex', gap: '10px'}}>
@@ -163,6 +210,58 @@ const Reports = () => {
                 </div>
             </Header>
 
+            {/* Export Section */}
+            <Card style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', border: '2px solid var(--primary)' }}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '15px'}}>
+                    <div style={{ background: 'var(--bg)', padding: '10px', borderRadius: '50%' }}>
+                        <Calendar size={24} color="var(--primary)" />
+                    </div>
+                    <div>
+                        <h3 style={{margin: 0, fontSize: '1rem', color: 'var(--text)'}}>Monthly Report Export</h3>
+                        <p style={{margin: '4px 0 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)'}}>
+                            Download a detailed PDF of Sales & Purchases for a specific month.
+                        </p>
+                    </div>
+                </div>
+                <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                    <select 
+                        value={reportMonth}
+                        onChange={(e) => setReportMonth(e.target.value)}
+                        style={{ padding: '10px', borderRadius: '6px', background: 'var(--input-bg)', color: 'var(--text)', border: '1px solid var(--border)' }}
+                    >
+                        {Array.from({length: 12}, (_, i) => (
+                            <option key={i+1} value={i+1}>{new Date(0, i).toLocaleString('default', { month: 'long' })}</option>
+                        ))}
+                    </select>
+                    <select 
+                        value={reportYear}
+                        onChange={(e) => setReportYear(e.target.value)}
+                        style={{ padding: '10px', borderRadius: '6px', background: 'var(--input-bg)', color: 'var(--text)', border: '1px solid var(--border)' }}
+                    >
+                        {[2023, 2024, 2025, 2026].map(y => <option key={y} value={y}>{y}</option>)}
+                    </select>
+                    <button 
+                        onClick={handleDownloadReport}
+                        disabled={downloading}
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '8px',
+                            background: 'var(--primary)', color: 'white', border: 'none',
+                            padding: '10px 20px', borderRadius: '6px', cursor: 'pointer', 
+                            opacity: downloading ? 0.7 : 1, fontWeight: 500
+                        }}
+                    >
+                        <Download size={18} />
+                        {downloading ? 'Generating...' : 'Download PDF'}
+                    </button>
+                </div>
+            </Card>
+
+            {loading ? (
+                <div style={{textAlign: 'center', padding: '40px', color: 'var(--text-secondary)'}}>Loading Financial Data...</div>
+            ) : !data || !data.summary ? (
+                <div style={{textAlign: 'center', padding: '40px', color: 'var(--text-secondary)'}}>No Chart Data Available</div>
+            ) : (
+            <>
             <Grid>
                 <Card>
                     <h3>Total Revenue ({statusFilter})</h3>
@@ -283,6 +382,8 @@ const Reports = () => {
 
                 </div>
             </Card>
+            </>
+            )}
 
         </Container>
     );
