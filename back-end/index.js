@@ -32,6 +32,7 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/invoices', require('./routes/invoices'));
 app.use('/api/clients', require('./routes/clients'));
 app.use('/api/reports', require('./routes/reports'));
+app.use('/api/report-export', require('./routes/report_export'));
 app.use('/api/settings', require('./routes/settings'));
 app.use('/api/scrap', require('./routes/scrap'));
 app.use('/api/users', require('./routes/users'));
