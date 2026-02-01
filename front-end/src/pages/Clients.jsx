@@ -478,6 +478,31 @@ const Clients = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Validations
+    const nameRegex = /^[a-zA-Z\s]+$/; // Alphabet only
+    if (!nameRegex.test(formData.name)) {
+      addToast("Name must contain alphabets only.", "error");
+      return;
+    }
+
+    // Phone: Start with 05, 06, 07, 04 and be exactly 10 digits
+    // Regex explanation: ^(05|06|07|04) checks start, \d{8}$ checks for 8 more digits (total 10)
+    const phoneRegex = /^(05|06|07|04)\d{8}$/;
+    if (!phoneRegex.test(formData.phone)) {
+      addToast("Phone must start with 05, 06, 07, or 04 and be 10 digits.", "error");
+      return;
+    }
+    
+    // Address: Alphanumeric (Already flexible, but let's ensure it's not empty if desired, though prompt didn't specify required. 
+    // Assuming prompts implies "if provided, can contain alphabets and numbers") - No strict regex needed as all chars are allowed usually.
+
+    // Email: Valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+       addToast("Please enter a valid email address.", "error");
+       return;
+    }
+
     if (isEditing && selectedClient) {
       // Update existing client
       try {
