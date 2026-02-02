@@ -140,3 +140,42 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * Delete Purchase Order
+ * Reverses the stock addition (if possible) and removes the record.
+ * Warning: This does NOT revert the Weighted Average Price calculation as that is complex to undo history for.
+ */
+router.delete('/:id', async (req, res) => {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const { id } = req.params;
+
+        // 1. Get Items to reverse stock
+        const itemsRes = await client.query('SELECT material_id, quantity FROM purchase_items WHERE purchase_id = $1', [id]);
+        
+        // 2. Reverse Stock
+        for (const item of itemsRes.rows) {
+            // Deduct the quantity that was added
+            await client.query(
+                'UPDATE materials SET quantity = quantity - $1 WHERE id = $2',
+                [item.quantity, item.material_id]
+            );
+        }
+
+        // 3. Delete Record (Cascades to items usually, but let's be safe)
+        await client.query('DELETE FROM purchase_items WHERE purchase_id = $1', [id]);
+        await client.query('DELETE FROM purchases WHERE id = $1', [id]);
+
+        await client.query('COMMIT');
+        res.json({ message: 'Purchase deleted and stock reversed' });
+
+    } catch (err) {
+        await client.query('ROLLBACK');
+        console.error(err);
+        res.status(500).send('Server Error');
+    } finally {
+        client.release();
+    }
+});

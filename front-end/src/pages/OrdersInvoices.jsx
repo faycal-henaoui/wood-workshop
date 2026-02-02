@@ -470,7 +470,29 @@ const OrdersInvoices = () => {
     }
   }, [pdfInvoice]);
 
-  const filteredInvoices = invoices.filter(inv => {
+    const handleDeletePurchase = (id) => {
+        requestConfirmation({
+            title: 'Delete Purchase Record?',
+            message: 'This will REMOVE the purchase items from your stock levels. Use this if you made a mistake entry.',
+            type: 'warning',
+            onConfirm: async () => {
+                try {
+                    const res = await fetch(`${API_URL}/api/purchases/${id}`, { method: 'DELETE' });
+                    if (res.ok) {
+                        setPurchases(purchases.filter(p => p.id !== id));
+                        addToast("Purchase deleted and Stock reversed.", "success");
+                    } else {
+                        addToast("Failed to delete purchase.", "error");
+                    }
+                } catch (e) {
+                    console.error(e);
+                    addToast("Network Error", "error");
+                }
+            }
+        });
+    };
+
+    const filteredInvoices = invoices.filter(inv => {
       let matchesTab = activeTab === 'All';
       if (!matchesTab) {
         if (activeTab === 'Quote') matchesTab = inv.type === 'quote';
@@ -610,8 +632,11 @@ const OrdersInvoices = () => {
                     </button>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
                         <ShoppingCart size={16} />
-                        <span>Stock Updated</span>
+                        <span>Restocked</span>
                     </div>
+                    <button title="Delete Purchase" onClick={(e) => { e.stopPropagation(); handleDeletePurchase(p.id); }} style={{ color: '#E74C3C', marginLeft: '10px' }}>
+                        <Trash2 size={16} />
+                    </button>
                 </div>
             </InvoiceCard>
             )) : (
