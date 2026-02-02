@@ -139,7 +139,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router;
+// Remove this intermediate export and move to bottom
+// module.exports = router;
 
 /**
  * Delete Purchase Order
@@ -152,16 +153,22 @@ router.delete('/:id', async (req, res) => {
         await client.query('BEGIN');
         const { id } = req.params;
 
+        console.log(`Attempting to delete purchase ${id}`);
+
         // 1. Get Items to reverse stock
         const itemsRes = await client.query('SELECT material_id, quantity FROM purchase_items WHERE purchase_id = $1', [id]);
         
+        console.log(`Found ${itemsRes.rows.length} items to reverse`);
+
         // 2. Reverse Stock
         for (const item of itemsRes.rows) {
-            // Deduct the quantity that was added
-            await client.query(
-                'UPDATE materials SET quantity = quantity - $1 WHERE id = $2',
-                [item.quantity, item.material_id]
-            );
+            if (item.material_id) {
+                // Deduct the quantity that was added
+                await client.query(
+                    'UPDATE materials SET quantity = quantity - $1 WHERE id = $2',
+                    [item.quantity, item.material_id]
+                );
+            }
         }
 
         // 3. Delete Record (Cascades to items usually, but let's be safe)
@@ -173,9 +180,11 @@ router.delete('/:id', async (req, res) => {
 
     } catch (err) {
         await client.query('ROLLBACK');
-        console.error(err);
-        res.status(500).send('Server Error');
+        console.error("DELETE ERROR:", err);
+        res.status(500).json({ error: err.message, stack: err.stack });
     } finally {
         client.release();
     }
 });
+
+module.exports = router;
