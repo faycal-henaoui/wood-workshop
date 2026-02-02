@@ -164,9 +164,12 @@ router.delete('/:id', async (req, res) => {
         for (const item of itemsRes.rows) {
             if (item.material_id) {
                 // Deduct the quantity that was added
+                // Ensure quantity is treated as a number to avoid "invalid input syntax for type integer"
+                const qtyToReverse = Number(item.quantity); 
+                
                 await client.query(
                     'UPDATE materials SET quantity = quantity - $1 WHERE id = $2',
-                    [item.quantity, item.material_id]
+                    [qtyToReverse, item.material_id]
                 );
             }
         }
